@@ -76,6 +76,9 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
+  -- editorconfig for vim-sleuth
+  'editorconfig/editorconfig-vim',
+
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
@@ -218,14 +221,32 @@ require('lazy').setup({
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {
       options = {
-        icons_enabled = false,
-        theme = 'auto',
-        component_separators = '|',
-        section_separators = '',
+        icons_enabled = true,
+        theme = 'codedark',
+        component_separators = {left = '', right = ''},
+        section_separators = {left = '', right = ''},
       },
     },
+  },
+
+  {
+    -- bufferline for tablike buffers  (they aren't tabs!!)
+    -- doesn't really work right now
+    'akinsho/bufferline.nvim',
+    version = "*", dependencies = 'nvim-tree/nvim-web-devicons',
+  },
+
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    version = "*",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "MunifTanjim/nui.nvim",
+    }
   },
 
   {
@@ -293,6 +314,7 @@ require('lazy').setup({
 vim.o.hlsearch = false
 
 -- Make line numbers default
+vim.wo.relativenumber = true
 vim.wo.number = true
 
 -- Enable mouse mode
@@ -439,7 +461,7 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
+    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'java', 'typescript', 'vimdoc', 'vim', 'bash' },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
